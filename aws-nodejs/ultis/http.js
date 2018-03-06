@@ -1,22 +1,22 @@
-export const getCognitoIdentityId = event => event.requestContext.identity.cognitoIdentityId;
+const getCognitoIdentityId = event => event.requestContext.identity.cognitoIdentityId;
 
-export const getRequestBody = event => JSON.parse(event.body);
+const getRequestBody = event => JSON.parse(event.body);
 
-export const getQueryStringParams = event => event.queryStringParameters || {};
+const getQueryStringParams = event => event.queryStringParameters || {};
 
-export const getQueryStringParam = (event, name, fallback) => {
+const getQueryStringParam = (event, name, fallback) => {
   const params = getQueryStringParams(event);
   return params[name] || fallback;
 };
 
-export const getPathParams = event => event.pathParameters || {};
+const getPathParams = event => event.pathParameters || {};
 
-export const getPathParam = (event, name, fallback) => {
+const getPathParam = (event, name, fallback) => {
   const params = getPathParams(event);
   return params[name] || fallback;
 };
 
-export const createResponse = (body, statusCode = 200, headers = {}) => ({
+const createResponse = (body, statusCode = 200, headers = {}) => ({
   statusCode,
   headers: Object.assign({
     'Access-Control-Allow-Origin': '*',
@@ -25,7 +25,7 @@ export const createResponse = (body, statusCode = 200, headers = {}) => ({
   body: (typeof body === 'string') ? body : JSON.stringify(body),
 });
 
-export const createNotFoundResponse = (message = null) => {
+const createNotFoundResponse = (message = null) => {
   const body = {};
   if (message) {
     body.message = message;
@@ -33,7 +33,7 @@ export const createNotFoundResponse = (message = null) => {
   return createResponse(body, 404);
 };
 
-export const createBadRequestResponse = (violations = [], message = null) => {
+const createBadRequestResponse = (violations = [], message = null) => {
   const body = {
     message: message || violations.map(violation => violation.message).join('. '),
   };
@@ -43,7 +43,20 @@ export const createBadRequestResponse = (violations = [], message = null) => {
   return createResponse(body, 400);
 };
 
-export const createErrorResponse = error => createResponse(
+const createErrorResponse = error => createResponse(
   { message: error.message },
   error.statusCode || 501,
 );
+
+export {
+  getCognitoIdentityId,
+  getRequestBody,
+  getQueryStringParams,
+  getQueryStringParam,
+  getPathParams,
+  getPathParam,
+  createResponse,
+  createNotFoundResponse,
+  createBadRequestResponse,
+  createErrorResponse,
+};
