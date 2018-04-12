@@ -13,20 +13,13 @@
 
 service: aws-nodejs # NOTE: update this with your service name
 
-plugins:
-  - serverless-webpack
-
-custom:
-  webpack:
-    includeModules: true
-
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs8.10
 
 # you can overwrite defaults here
 #  stage: dev
@@ -64,6 +57,10 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

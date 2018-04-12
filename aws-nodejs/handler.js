@@ -1,14 +1,13 @@
-export const hello = (event, context, callback) => {
+const hello = async (event, context) => {
   const response = {
     statusCode: 200,
     body: JSON.stringify({
       message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
+      event,
+      context,
     }),
   };
-
-  callback(null, response);
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+  return response;
 };
+
+module.exports = { hello };
