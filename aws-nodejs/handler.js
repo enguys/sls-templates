@@ -10,4 +10,4 @@ const hello = async (event, context) => {
   return response;
 };
 
-module.exports = { hello };
+export { hello };
